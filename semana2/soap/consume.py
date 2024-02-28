@@ -4,3 +4,7 @@ client=Client(
 )
 result =client.service.NumberToWords(1)
 print(result)
+
+resultado = client.service.NumberToDollars(20)
+
+print(resultado)
