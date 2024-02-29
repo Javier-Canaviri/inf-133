@@ -7,10 +7,9 @@ def saludar(nombre):
 def SumaDosNumeros(num1, num2):
     return num1 + num2
 
-def CadenaPalindromo(cad):
-    cadenota = cad.replace(" ", "").lower()
-
-    return cadena == cadenota[::-1]
+def CadenaPalindromo(cadena):
+    cadena = cadena.replace(" ", "").lower()
+    return cadena == cadena[::-1]
 
 dispatcher = SoapDispatcher(
     "ejemplo-soap-server",
@@ -41,8 +40,12 @@ dispatcher.register_function(
     returns={"es_palindromo": bool},
     args={"cadena": str},
 )
-
-server = HTTPServer(("", 8000), SOAPHandler)
-server.dispatcher = dispatcher
-print("Servidor SOAP iniciado en http://localhost:8000/")
-server.serve_forever()
+try:
+    
+    server = HTTPServer(("", 8000), SOAPHandler)
+    server.dispatcher = dispatcher
+    print("Servidor SOAP iniciado en http://localhost:8000/")
+    server.serve_forever()
+except KeyboardInterrupt:
+        print(' Apagando servidor web')
+        server.socket.close()
