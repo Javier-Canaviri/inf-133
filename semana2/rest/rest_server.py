@@ -53,7 +53,7 @@ class RESTRequestHandler(BaseHTTPRequestHandler):
             self.send_response(404)
             self.send_header("Content-type", "application/json")
             self.end_headers()
-            self.wfile.write(json.dumps({"Error": "Ruta no existente"}).encode("utf-8"))
+            self.wfile.write(json.dumps({"Error": "Ruta no existente wasa"}).encode("utf-8"))
 
     def do_POST(self):
         if self.path == "/agrega_estudiante":
@@ -86,13 +86,17 @@ class RESTRequestHandler(BaseHTTPRequestHandler):
             self.send_header("Content-type", "application/json")
             self.end_headers()
             self.wfile.write(json.dumps({"Error": "Ruta no existente"}).encode("utf-8"))
+            
+    def buscar_nombre(self):
+        nombre_con_P=[estudiante["nombre"] for estudiante in estudiantes if estudiante["nombre"].startswith("P")]
+        return (nombre_con_P)
 
 
 def run_server(port=8000):
     try:
-        server_address = ("", port)
+        server_address = ('', port)
         httpd = HTTPServer(server_address, RESTRequestHandler)
-        print(f"Iniciando servidor web en http://localhost:{port}/")
+        print(f'Iniciando servidor web en http://localhost:{port}/')
         httpd.serve_forever()
     except KeyboardInterrupt:
         print("Apagando servidor web")
