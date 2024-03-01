@@ -14,7 +14,7 @@ estudiantes = [
         "id": 2,
         "nombre": "Pedro",
         "apellido": "Cordero",
-        "carrera": "Levanta Muertos",
+        "carrera": "Policia",
     },
     {
         "id": 3,
@@ -49,11 +49,33 @@ class RESTRequestHandler(BaseHTTPRequestHandler):
                 self.send_header("Content-type", "application/json")
                 self.end_headers()
                 self.wfile.write(json.dumps(estudiante).encode("utf-8"))
+        elif self.path == "/estudiantes_con_p":
+            estudiantes_con_p = [estudiante for estudiante in estudiantes if estudiante["nombre"].startswith("P") or estudiante["nombre"].startswith("p")]
+            self.send_response(200)
+            self.send_header("Content-type", "application/json")
+            self.end_headers()
+            self.wfile.write(json.dumps(estudiantes_con_p).encode("utf-8"))
+        elif self.path == "/conteo_carreras":
+            conteo_carreras = {}
+            conteo_carreras = {estudiante["carrera"]: sum(1 for e in estudiantes if e["carrera"] == estudiante["carrera"]) for estudiante in estudiantes}
+
+            self.send_response(200)
+            self.send_header("Content-type", "application/json")
+            self.end_headers()
+            self.wfile.write(json.dumps(conteo_carreras).encode("utf-8"))
+            
+        elif self.path=="/total_estudiantes":
+            total_estudiantes=len(estudiantes)
+            self.send_response(200)
+            self.send_header("Content-type", "application/json")
+            self.end_headers()
+            self.wfile.write(json.dumps(total_estudiantes).encode("utf-8"))
         else:
             self.send_response(404)
             self.send_header("Content-type", "application/json")
             self.end_headers()
             self.wfile.write(json.dumps({"Error": "Ruta no existente wasa"}).encode("utf-8"))
+        
 
     def do_POST(self):
         if self.path == "/agrega_estudiante":
@@ -87,9 +109,7 @@ class RESTRequestHandler(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(json.dumps({"Error": "Ruta no existente"}).encode("utf-8"))
             
-    def buscar_nombre(self):
-        nombre_con_P=[estudiante["nombre"] for estudiante in estudiantes if estudiante["nombre"].startswith("P")]
-        return (nombre_con_P)
+    
 
 
 def run_server(port=8000):
