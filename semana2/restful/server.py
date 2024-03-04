@@ -5,8 +5,8 @@ estudiantes = [
     {
         "id": 1,
         "nombre": "Pedrito",
-        "apellido": "García",
-        "carrera": "Ingeniería de Sistemas",
+        "apellido": "Garcia",
+        "carrera": "Ingenieria de Sistemas",
     },
 ]
 
@@ -18,33 +18,29 @@ class RESTRequestHandler(BaseHTTPRequestHandler):
             self.send_header("Content-type", "application/json")
             self.end_headers()
             self.wfile.write(json.dumps(estudiantes).encode("utf-8"))
-        elif self.path.startswith("/estudiantes/"):
-
-            id = int(self.path.split("/")[-1])
-            estudiante = next(
-                (estudiante for estudiante in estudiantes if estudiante["id"] == id),
-                None,
-            )
-            if estudiante:
-                self.send_response(200)
-                self.send_header("Content-type", "application/json")
-                self.end_headers()
-                self.wfile.write(json.dumps(estudiante).encode("utf-8"))
-
-        else:
-            self.send_response(404)
-            self.send_header("Content-type", "application/json")
+             
+        elif self.path == "/estudiantes/carreras/":
+            estEconomia = next((estudiante["carrera":"Economia"] for estudiante in estudiantes),None,)
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
             self.end_headers()
-            self.wfile.write(json.dumps({"Error": "Ruta no existente"}).encode("utf-8"))
-
-    """def do_GET(self):
-        if self.path == "/estudiantes":
+            self.wfile.write(json.dumps(list(estEconomia)).encode("utf-8"))
+        
+        elif self.path == "/carreras":
+            carreras = set(estudiante["carrera"] for estudiante in estudiantes)
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps(list(carreras)).encode("utf-8"))
+        
+        elif self.path == "/economistas":  
+            estEconomia = [estudiante for estudiante in estudiantes if estudiante["carrera"] == "Economia"]
             self.send_response(200)
             self.send_header("Content-type", "application/json")
             self.end_headers()
-            self.wfile.write(json.dumps(estudiantes).encode("utf-8"))
-        elif self.path.startswith("/carreras"):
-            
+            self.wfile.write(json.dumps(estEconomia).encode("utf-8"))
+               
+        elif self.path.startswith("/estudiantes/"):
             id = int(self.path.split("/")[-1])
             estudiante = next(
                 (estudiante for estudiante in estudiantes if estudiante["id"] == id),
@@ -55,13 +51,14 @@ class RESTRequestHandler(BaseHTTPRequestHandler):
                 self.send_header("Content-type", "application/json")
                 self.end_headers()
                 self.wfile.write(json.dumps(estudiante).encode("utf-8"))
-
+        
         else:
             self.send_response(404)
             self.send_header("Content-type", "application/json")
             self.end_headers()
             self.wfile.write(json.dumps({"Error": "Ruta no existente"}).encode("utf-8"))
-"""
+
+   
     def do_POST(self):
         if self.path == "/estudiantes":
             content_length = int(self.headers["Content-Length"])
