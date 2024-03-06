@@ -65,8 +65,14 @@ put_response = requests.request(
 print(put_response.text)
 
 
-# GET filtrando por nombre con query params
+print( "GET filtrando por nombre con query params: nombre= Pedrito")
 ruta_get = url + "estudiantes?nombre=Pedrito"
 get_response = requests.request(method="GET", url=ruta_get)
+print(get_response.text)
+
+print( "GET filtrando por Apellidos con query params: apellido= Pérez")
+
+ruta_apellido=url+"estudiantes?apellido=Pérez"
+get_response=requests.request(method="GET",url=ruta_apellido)
 print(get_response.text)
 

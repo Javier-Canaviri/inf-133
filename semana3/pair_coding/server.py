@@ -33,6 +33,12 @@ class RESTRequestHandler(BaseHTTPRequestHandler):
         data = json.loads(data.decode("utf-8"))
         return data
 
+    def if_queryparams(self,estudiantes_filtrados):
+        if estudiantes_filtrados != []:
+            self.response_handler(200, estudiantes_filtrados)
+        else:
+            self.response_handler(204, [])
+
     def do_GET(self):
         parsed_path = urlparse(self.path)
         query_params = parse_qs(parsed_path.query)
@@ -45,12 +51,18 @@ class RESTRequestHandler(BaseHTTPRequestHandler):
                     for estudiante in estudiantes
                     if estudiante["nombre"] == nombre
                 ]
-                if estudiantes_filtrados != []:
-                    self.response_handler(200, estudiantes_filtrados)
-                else:
-                    self.response_handler(204, [])
+                self.if_queryparams(estudiantes_filtrados)
+                
+            elif "apellido" in query_params:
+                apellido =query_params["apellido"][0]
+                estudiantes_filtrados=[
+                    estudiante for estudiante in estudiantes if estudiante["apellido"]== apellido
+                ]
+                self.if_queryparams(estudiantes_filtrados)
+            
             else:
                 self.response_handler(200, estudiantes)
+                
         elif self.path.startswith("/estudiantes/"):
             id = int(self.path.split("/")[-1])
             estudiante = self.find_student(id)
@@ -58,7 +70,6 @@ class RESTRequestHandler(BaseHTTPRequestHandler):
                 self.response_handler(200, [estudiante])
             else:
                 self.response_handler(204, [])
-        elif self.
 
         else:
             self.response_handler(404, {"Error": "Ruta no existente"})
