@@ -13,6 +13,15 @@ estudiantes = [
     },
 ]
 
+class EstudiantesService:
+
+class HTTPResponseHandler:
+     @staticmethod
+     def handle_response(handler, status, data):
+        handler.send_response(status)
+        handler.send_header("Content-type", "application/json")
+        handler.end_headers()
+        handler.wfile.write(json.dumps(data).encode("utf-8"))
 
 class RESTRequestHandler(BaseHTTPRequestHandler):
     def response_handler(self, status, data):
