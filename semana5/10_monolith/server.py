@@ -60,15 +60,13 @@ class BlogHandler(BaseHTTPRequestHandler):
             if post_id in db:
                 content_length = int(self.headers["Content-Length"])
                 post_data = self.rfile.read(content_length)
-                post_params = parse_qs(post_data.decode())
+                post_params = json.loads(post_data.decode())
                 db[post_id]["title"] = post_params.get("title", [db[post_id]["title"]])
-                db[post_id]["content"] = post_params.get(
-                    "content", [db[post_id]["content"]]
-                )
+                db[post_id]["content"] = post_params.get("content", [db[post_id]["content"]])
                 self.send_response(200)
                 self.send_header("Content-type", "application/json")
                 self.end_headers()
-                self.wfile.write(json.dumps({"id": post_id}).encode())
+                self.wfile.write(json.dumps(db[post_id]).encode())
             else:
                 self.send_error(404, "Publicación no encontrada")
         else:
