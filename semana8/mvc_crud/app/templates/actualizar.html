@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="subtitle is-2">Actualizar Usuario</h2>
+
+<form method="post">
+    <div class="field">
+        <label for="first_name">Nombre:</label>
+        <div class="control">
+            <input type="text" id="first_name" name="first_name" 
+            required class="input" value="{{ user.first_name }}">
+        </div>
+    </div>
+    <div class="field">
+        <label for="last_name">Apellido:</label>
+        <div class="control">
+            <input type="text" id="last_name" name="last_name" 
+            required class="input" value="{{ user.last_name }}">
+        </div>
+    </div>
+    <div class="field">
+        <label for="contraseña">Contraseña:</label>
+        <div class="control">
+            <input type="text" id="contraseña " name="contraseña"
+            required class="input" value="{{ user.contraseña}}">
+        </div>
+    </div>
+    <div class="field">
+        <label for="correo">Correo:</label>
+        <div class="control">
+            <input type="text" id="correo" name="correo" 
+            required class="input" value="{{ user.correo }}">
+        </div>
+    </div>
+    <div class="field">
+        <label for="fecha_nac">Fecha de Nacimiento:</label>
+        <div class="control">
+            <input type="text" id="fecha_nac" name="fecha_nac" 
+            required class="input" value="{{ user.fecha_nac}}">
+        </div>
+    </div>
+
+    <input type="submit" value="Actualizar" class="button is-primary">
+
+{% endblock %}
