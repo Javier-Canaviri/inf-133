@@ -27,7 +27,7 @@ class Libro(db.Model):
     def get_by_id(id):
         return Libro.query.get(id)
 
-    def update(self, titulo=None, autor=None, edicion=None, disponibilidad):
+    def update(self, titulo=None, autor=None, edicion=None, disponibilidad=None):
         if titulo is not None:
             self.titulo=titulo
         if autor is not None:
