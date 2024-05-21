@@ -65,3 +65,5 @@ def delete_libro(id):
         libro.delete()
         flash("Libro borrado exitosamente", "success")
         return redirect(url_for("libro.list_libros"))
+    else:
+        return jsonify({"message": "Unauthorized"}), 403
