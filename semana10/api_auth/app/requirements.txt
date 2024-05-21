@@ -1,0 +1,9 @@
+flask
+flask-sqlalchemy
+
+#documentacion en web-api
+flask-swagger-ui
+#autenticacion para web app
+Flask-Login
+#autenticacion para API
+Flask-JWT-Extended

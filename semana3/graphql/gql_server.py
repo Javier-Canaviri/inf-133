@@ -9,6 +9,20 @@ class Estudiante(ObjectType):
     apellido = String()
     carrera = String()
 
+estudiantes = [
+    Estudiante(
+        id=1, 
+        nombre="Pedrito", 
+        apellido="García", 
+        carrera="Ingeniería de Sistemas"
+    ),
+    Estudiante(
+        id=2, 
+        nombre="Jose", 
+        apellido="Lopez", 
+        carrera="Arquitectura"
+    )
+]
 
 class Query(ObjectType):
     estudiantes = List(Estudiante)
@@ -59,12 +73,7 @@ class Mutations(ObjectType):
     crear_estudiante = CrearEstudiante.Field()
     delete_estudiante = DeleteEstudiante.Field()
 
-estudiantes = [
-    Estudiante(
-        id=1, nombre="Pedrito", apellido="García", carrera="Ingeniería de Sistemas"
-    ),
-    Estudiante(id=2, nombre="Jose", apellido="Lopez", carrera="Arquitectura"),
-]
+
 
 schema = Schema(query=Query, mutation=Mutations)
 
@@ -81,7 +90,6 @@ class GraphQLRequestHandler(BaseHTTPRequestHandler):
             content_length = int(self.headers["Content-Length"])
             data = self.rfile.read(content_length)
             data = json.loads(data.decode("utf-8"))
-            print(data)
             result = schema.execute(data["query"])
             self.response_handler(200, result.data)
         else:
