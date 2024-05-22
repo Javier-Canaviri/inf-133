@@ -7,7 +7,7 @@ class Libro(db.Model):
     titulo =db.Column(db.String(100), nullable=False)
     autor= db.Column(db.String(100), nullable=False )
     edicion=db.Column(db.String(100), nullable=False)
-    disponibilidad=db.Column(db.boolean, nullable=False)
+    disponibilidad=db.Column(db.Boolean, nullable=False)
 
     def __init__(self, titulo, autor, edicion, disponibilidad ):
         self.titulo=titulo
