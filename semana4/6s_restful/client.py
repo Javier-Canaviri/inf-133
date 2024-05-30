@@ -28,8 +28,9 @@ put_response = requests.request(
 )
 print(put_response.text)
 
+print("----------------------------------")
 
 # GET filtrando por nombre con query params
-ruta_get = url + "estudiantes?nombre=Pedrito"
+ruta_get = url + "estudiantes?nombre=Juan"
 get_response = requests.request(method="GET", url=ruta_get)
 print(get_response.text)

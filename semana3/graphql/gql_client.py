@@ -3,9 +3,9 @@ import requests
 url = 'http://localhost:8000/graphql'
 
 # Definir la consulta GraphQL simple
-query_lista = """
+query = """
     {
-        estudiantes{
+        estudiantes {
             id
             nombre
             apellido
@@ -14,13 +14,13 @@ query_lista = """
     }
 """
 # Solicitud POST al servidor GraphQL
-response = requests.post(url, json={'query': query_lista})
+response = requests.post(url, json={'query': query})
 print(response.text)
-
+'''
 # Definir la consulta GraphQL con parametros
 query = """
     {
-        estudiantePorId(id: 2){
+        estudiante_por_id (id: 2){
             nombre
         }
     }
@@ -70,4 +70,4 @@ print(response_mutation.text)
 
 # Lista de todos los estudiantes
 response = requests.post(url, json={'query': query_lista})
-print(response.text)
+print(response.text)'''
