@@ -18,8 +18,8 @@ def get_animals():
 
 
 # Ruta para obtener un animal específico por su ID
-@animal_bp.route("/animals/<int:id>", methods=["GET"])
 @jwt_required
+@animal_bp.route("/animals/<int:id>", methods=["GET"])
 @roles_required(roles=["admin", "user"])
 def get_animal(id):
     animal = Animal.get_by_id(id)
